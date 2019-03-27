@@ -1,0 +1,35 @@
+.full{
+    width: 100%
+}
+.half{
+    width: 50%;
+}
+
+h5{
+    color: #a9a9a9;
+    font-weight: 300;
+    font-size: 16px;
+    margin-left: 0.6em
+}
+.fab{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    margin-right: 2em;
+    margin-bottom: 2.5em
+}
+.optional{
+    margin-top: 2em
+}
+
+ul, li{
+    list-style: none;
+    margin-left: 1em;
+    margin-top:0.5em 
+}
+
+h6{
+    color:red;
+    font-size: 12px!important
+}

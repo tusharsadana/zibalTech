@@ -1,0 +1,70 @@
+<mat-card class="mat-elevation-z0">
+
+  <mat-card-title>
+    {{temp.title}}
+<br>
+    <button  mat-stroked-button (click)="closeDialogue(temp._id)" *ngIf="temp.appliedCount>0">View Applicants</button>
+  </mat-card-title>
+
+  <mat-card-subtitle>
+    <div class=" detailss">
+      <li style="margin-top:-4px"><b>Name: </b>{{temp.jobOwner.name}}</li>
+      <li><b>Contact: </b> {{temp.jobOwner.contact}}</li>
+      <li><b>Email: </b> {{temp.jobOwner.email}}</li>
+      <li><b>Profile: </b> {{temp.jobOwner.companyProfile}}</li>
+      <li><b>Job Type:</b> {{temp.preferences.jobType}}</li>
+      <li><b>Salary:</b>{{temp.preferences.annualSalary.min}} - {{temp.preferences.annualSalary.max}} </li>
+    </div>
+
+  </mat-card-subtitle>
+
+  <mat-card-content class="mt-2">
+    <b>Job Description</b>
+    <br>
+    {{temp.description}}
+    <br><br>
+    <b> Job Details</b>
+    <br>
+    <div [innerHTML]="temp.details" style="word-wrap: break-word!important"></div>
+    <br><br>
+    <b>Experience</b>
+    <br>
+    {{temp.matchingCriteria.experience.maximum}} years and {{temp.matchingCriteria.experience.minimum}} years
+    <br><br>
+    <b>Highest Qualification</b>
+    <br>
+    {{temp.matchingCriteria.highestQualification.highestQualification}}
+    <br><br>
+    <b>Keywords</b>
+    <br>
+    <mat-chip-list>
+      <mat-chip *ngFor="let exp of temp.matchingCriteria.keywords.keywords" color="accent" selected>{{exp}}</mat-chip>
+    </mat-chip-list>
+    <br>
+    <b>Location</b>
+    <br>
+    {{temp.matchingCriteria.location.location}}
+    <br><br>
+    <b>Preferences</b>
+    <br>
+    <mat-chip-list>
+      <mat-chip *ngIf="temp.preferences.autoMatch">Auto Matching</mat-chip>
+      <mat-chip *ngIf="temp.preferences.screening">Screening</mat-chip>
+      <mat-chip *ngIf="temp.preferences.companyName">Company Name</mat-chip>
+      <mat-chip *ngIf="temp.preferences.revealContact">Reveal Contract</mat-chip>
+      <mat-chip *ngIf="temp.preferences.womenOnGo">Woman on the go</mat-chip>
+      <mat-chip *ngIf="temp.preferences.applicationsInEmail">Application in email</mat-chip>
+    </mat-chip-list>
+  </mat-card-content>
+  <br>
+  <b>Nationality</b>
+  <br>
+  {{temp.matchingCriteria.nationality.nationality}}
+  <mat-card-footer class="mt-4">
+    <div class="row">
+      <div class="col-10" *ngIf="temp.scheduleJob.autoRenew">Renewal : {{temp.scheduleJob.autoRenewPeriod.start | date:
+        'short'}} to {{temp.scheduleJob.autoRenewPeriod.end | date: 'short'}}</div>
+      <div class="col-2">{{temp.reference}}</div>
+    </div>
+  </mat-card-footer>
+</mat-card>

@@ -1,0 +1,76 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-sidenav-container class="example-sidenav-container">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches">
+
+      <div class="container">
+        <img class="mx-auto" src="" alt="xyz logo">
+        <mat-divider style="margin-top:1em; margin-bottom: 3em"></mat-divider>
+        <div class="content mx-auto">
+          <mat-nav-list matRipple [matRippleColor]="'primary'" (click)="navigateTo(1); snav.toggle()">
+
+            <div class="row">
+              <div class="col-2">
+                <i class="fas fa-home"></i>
+              </div>
+              <div class="col-9">
+                <h6>Home</h6>
+              </div>
+            </div>
+
+          </mat-nav-list>
+          
+          
+         
+
+         
+          <mat-nav-list matRipple [matRippleColor]="'primary'" (click)="navigateTo(6);snav.toggle()">
+            <div class="row">
+              <div class="col-2">
+                <i class="fas fa-briefcase"></i>
+              </div>
+              <div class="col-9">
+                <h6>Manage Projects</h6>
+              </div>
+            </div>
+          </mat-nav-list>
+         
+          <mat-nav-list matRipple [matRippleColor]="'primary'" (click)="logout()">
+
+            <div class="row" style="color: red">
+              <div class="col-2">
+                <i class="fas fa-times"></i>
+              </div>
+              <div class="col-9">
+                <h6>Logout</h6>
+              </div>
+            </div>
+
+          </mat-nav-list>
+        </div>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar class="mat-elevation-z0">
+        <button mat-icon-button (click)="snav.toggle()">
+          <i class="material-icons">
+            graphic_eq
+          </i></button>
+        <h1 class="example-app-name" style="font-family: 'Montserrat', sans-serif">{{topic}}</h1>
+        <span class="example-fill-remaining-space"></span>
+        <span class="d-none d-lg-block">
+          <button mat-button (click)="openBottomSheet()">Notifications <i class="material-icons">
+              notifications_active
+            </i></button>
+          <button mat-button style="color: red" (click)="logout()"> Logout <i class="material-icons">
+              clear
+            </i></button>
+        </span>
+      </mat-toolbar>
+
+      
+      <router-outlet>
+
+      </router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

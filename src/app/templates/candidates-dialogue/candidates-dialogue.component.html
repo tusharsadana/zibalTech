@@ -1,0 +1,205 @@
+<h1 mat-dialog-title>
+  {{user.personal.name}}
+  <b> Registered on:{{user.registeredOn | date: 'medium'}}</b>
+</h1>
+
+<div mat-dialog-content>
+  <div class="container">
+    <div class="row heading">
+      <h6>Personal</h6>
+    </div>
+    <!--Personal-->
+    <div class="row content-t">
+      <div class="col-sm-5">
+        <strong>Email ID</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.personal.emailID}}
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Mobile Number</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.personal.mobileNo}}
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Current Location</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.personal.currentLocation}}
+      </div>
+    </div>
+    <div class="row content" *ngIf="calledBy=='hr'">
+      <div class="col-sm-5">
+        <strong>Domain Expertise</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.personal.domainExpertise}}
+      </div>
+    </div>
+    <div class="row content" *ngIf="calledBy=='hr'">
+      <div class="col-sm-5">
+        <strong>Language</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.personal.Language}}
+      </div>
+    </div>
+    <div class="row content" *ngIf="calledBy=='hr'">
+      <div class="col-sm-5">
+        <strong>Relevant Experience</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.personal.relevantExperience.years}} Years {{user.personal.relevantExperience.months}} Months
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Experience</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.personal.totalExperience.years}} Years {{user.personal.totalExperience.months}} Months
+      </div>
+    </div>
+    <!--Personal Done-->
+
+    <!--Employment-->
+    <div class="row heading-t">
+      <h6>Employment
+      </h6>
+    </div>
+    <div class="row content-t">
+      <div class="col-sm-5">
+        <strong>Current Designation</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.employment.currentDesignation}}
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Working Since</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.employment.workingSince | date : 'medium'}}
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Current Designation</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.employment.currentCompany}}
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Annual Salary</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.employment.annualSalary}}
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Skills</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.employment.skills}}
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Notice Period</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.employment.noticePeriod}} Month(s)
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Other Jobs</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.employment.anotherEmployment}}
+      </div>
+    </div>
+    <!--Employment Done-->
+
+
+    <!--Education-->
+    <div class="row heading-t">
+      <h6>Education
+      </h6>
+    </div>
+    <div class="row content-t">
+      <div class="col-sm-5">
+        <strong>HighestQualification</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.education.highestQualification}}
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Course</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.education.course}}
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>University</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.education.university}}
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Specialization</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.education.specialization}}
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Course Type</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.education.courseType}}
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Passing Year</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.education.passingYear}}
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-sm-5">
+        <strong>Another Education</strong>
+      </div>
+      <div class="col-sm-7">
+        {{user.education.anotherEducation}}
+      </div>
+    </div>
+    <!--Education Done-->
+
+
+  </div>
+</div>
+<!-- <div mat-dialog-actions style="margin-top:2em">
+  <button mat-button (click)="downloadResume()">Download CV</button>
+</div> -->
+<div mat-dialog-actions style="margin-top:2em" *ngIf="isResumePresent">
+  <a  target="_blank" href="{{downloadLink+user.personal.resume}}"> <button mat-button>Download CV</button></a>
+</div>

@@ -1,0 +1,351 @@
+<button mat-fab class="fab" matTooltip="View offer form" color="primary" (click)="showJobs()"><i class="material-icons">
+    remove_red_eye
+  </i></button>
+<div class="container-fluid">
+  <form name="job-posting" [formGroup]="form" (ngSubmit)="submitForm()" #formDirective="ngForm">
+    <div class="row" style="margin-top: 1em">
+      <div class="col-md-10">
+        <div class="required">
+          <h6 class="reqired">* this field is reqired</h6>
+        </div>
+        <mat-form-field appearance="outline" class="full" hintLabel="Max 100 characters">
+          <mat-label>Project Title</mat-label>
+          <input name="title" matInput placeholder="eg Sr Manager, Web Developer etc" formControlName="title" #title
+            maxlength="100">
+          <mat-error *ngIf="titleField.invalid && titleField.touched">{{titleError()}}</mat-error>
+          <mat-hint align="end">{{title.value?.length || 0}}/100</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Reference Code</mat-label>
+          <input name="code" matInput placeholder="">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <h5 style="margin-top: 2em">Project Description</h5>
+    <div class="required">
+      <h6 class="reqired">* this field is reqired</h6>
+    </div>
+    <mat-form-field appearance="outline" class="full" hintLabel="Max 1000 characters">
+      <mat-label>Project Summary</mat-label>
+      <textarea name="summary" #summary matInput placeholder="Give Consise text to attract right seekers" maxlength="1000"
+        formControlName="description"></textarea>
+      <mat-error *ngIf="descriptionField.invalid && descriptionField.touched">{{descriptionError()}}</mat-error>
+      <mat-hint align="end">{{summary.value?.length || 0}}/1000</mat-hint>
+    </mat-form-field>
+
+    <h5 style="margin-top: 2em">Project Details</h5>
+    <div class="required">
+      <h6 class="reqired">* this field is reqired</h6>
+    </div>
+    <angular-editor formControlName="details" [config]="config" style="margin-top: 0.8em"></angular-editor>
+    <mat-error *ngIf="detailsField.invalid && detailsField.touched">The max length of the description field is 5000
+      words</mat-error>
+
+    <div formGroupName="matchingCriteria">
+      <h5 style="margin-top: 2em">Matching Criteria</h5>
+      <div class="required">
+        <h6 class="reqired">* this field is reqired</h6>
+      </div>
+      <div class="row" formGroupName="keywords">
+        <div class="col-md-8">
+          <mat-form-field appearance="outline" class="full" hintLabel="Seperate by comma">
+            <mat-label>Keywords/ Skills</mat-label>
+            <input name="code" matInput placeholder="eg software development, dot net etc" formControlName="keywords">
+            <mat-error *ngIf="keywordsField.invalid && keywordsField.touched">{{keywordsError()}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 my-auto">
+          <mat-checkbox color="primary" formControlName="filter">Use as filter</mat-checkbox>
+        </div>
+      </div>
+
+      <h5 style="margin-top: 2em">Experience</h5>
+      <div class="row" formGroupName="experience">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="full" hintLabel="In years">
+            <mat-label>Maximum</mat-label>
+            <input name="code" matInput placeholder="" formControlName="maximum" maxlength="2">
+            <mat-error *ngIf="expMaxField.invalid && expMaxField.touched">{{expMaxError()}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+
+          <mat-form-field appearance="outline" class="full" hintLabel="In years">
+            <mat-label>Minimum</mat-label>
+            <input name="code" matInput placeholder="" formControlName="minimum" maxlength="2">
+            <mat-error *ngIf="expMinField.invalid && expMinField.touched">{{expMinError()}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 my-auto">
+          <mat-checkbox color="primary" formControlName="filter">Use as filter</mat-checkbox>
+        </div>
+      </div>
+
+
+      <h5 style="margin-top: 2em">Select Industry</h5>
+      <div class="row" formGroupName="industry">
+        <div class="col-md-8">
+          <div class="required">
+            <h6 class="reqired">* this field is reqired</h6>
+          </div>
+          <mat-form-field appearance="outline" class="full">
+            <mat-select formControlName="industry">
+              <mat-option *ngFor="let industry of jobFieldsArray" [value]="industry.industry">{{industry.industry}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="industryField.invalid && industryField.touched">{{industryError()}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 my-auto">
+          <mat-checkbox color="primary" formControlName="filter">Use as filter</mat-checkbox>
+        </div>
+      </div>
+
+      <h5 style="margin-top: 2em">Category/ Function</h5>
+      <div class="row" formGroupName="function">
+        <div class="col-md-4">
+          <div class="required">
+            <h6 class="reqired">* this field is reqired</h6>
+          </div>
+          <mat-form-field appearance="outline" class="full" hintLabel="Select Category / Functions">
+            <mat-select formControlName="function">
+              <mat-option *ngFor="let function of functionsArray" [value]="function.function" (click)="setfuctionsIndex(function)">{{function.function}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="functionField.invalid && functionField.touched">{{functionError()}}</mat-error>
+          </mat-form-field>
+        </div>
+
+
+        <div class="col-md-4" *ngIf="functionField.value!=''" formGroupName="role">
+          <div class="required">
+            <h6 class="reqired">* this field is reqired</h6>
+          </div>
+          <mat-form-field appearance="outline" class="full" hintLabel="Max Role">
+            <mat-select formControlName="role">
+              <mat-option *ngFor="let role of fuctionsIndex.roles" [value]="role.role">{{role.role}}</mat-option>
+              <mat-error *ngIf="roleField.invalid && roleField.touched">{{roleError()}}</mat-error>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 my-auto" formGroupName="role">
+          <mat-checkbox color="primary" formControlName="filter">Use as filter</mat-checkbox>
+        </div>
+      </div>
+
+
+      <h5 style="margin-top: 2em">Education</h5>
+      <div class="row" formGroupName="highestQualification">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="full" hintLabel="Highest Qualifiaction">
+            <mat-select formControlName="highestQualification">
+              <mat-option *ngFor="let education of educationArray" [value]="education.qualification" (click)="setEducationIndex(education)">{{education.qualification}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4" *ngIf="educationIndex!=undefined">
+          <mat-form-field appearance="outline" class="full" hintLabel="Specialization">
+            <mat-select formControlName="specialization">
+              <mat-option *ngFor="let specialization of educationIndex.specializations" [value]="specialization.specialization">{{specialization.specialization}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4 my-auto">
+          <mat-checkbox color="primary" formControlName="filter">Use as filter</mat-checkbox>
+        </div>
+      </div>
+
+
+      <h5 style="margin-top: 2em">Project Location</h5>
+      <div class="row" formGroupName="location">
+        <div class="col-md-8">
+          <mat-form-field appearance="outline" class="full" hintLabel="Prefered Project Location">
+            <mat-select formControlName="location">
+              <mat-option *ngFor="let location of locationArray" [value]="location.location">{{location.location}}</mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="nationsField.invalid && nationsField.touched">{{roleError()}}</mat-error> -->
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-4 my-auto">
+          <mat-checkbox color="primary" formControlName="filter">Use as filter</mat-checkbox>
+        </div>
+      </div>
+
+
+
+
+      <h5 style="margin-top: 2em">Nationality</h5>
+      <div class="row" formGroupName="nationality">
+        <div class="col-md-8">
+          <div class="required">
+            <h6 class="reqired">* this field is reqired</h6>
+          </div>
+          <mat-form-field appearance="outline" class="full" hintLabel="Select Nationality">
+            <mat-select formControlName="nationality">
+              <mat-option *ngFor="let nations of nationsArray" [value]="nations.nationality">{{nations.nationality}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="nationsField.invalid && nationsField.touched">{{roleError()}}</mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-4 my-auto">
+          <mat-checkbox color="primary" formControlName="filter">Use as filter</mat-checkbox>
+        </div>
+      </div>
+    </div>
+
+    <div formGroupName="jobOwner">
+      <h5 style="margin-top: 2em">Project Owner Details</h5>
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Project Owner Name</mat-label>
+            <input name="summary" matInput formControlName="name">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Project Owner Email</mat-label>
+            <input name="summary" matInput formControlName="email" type="email">
+            <mat-error *ngIf="emailField.invalid && emailField.touched">Please enter a valid email</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Project Owner Phone Number</mat-label>
+            <input name="summary" matInput formControlName="contact" type="number">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field appearance="outline" class="full" hintLabel="Full details of the company owner">
+            <mat-label>Project Owner Details</mat-label>
+            <textarea name="summary" matInput placeholder="Extention number, Calling Number, Address" formControlName="companyProfile"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div formGroupName="scheduleJob">
+      <h5 style="margin-top: 2em">Schedule Project</h5>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="full" hintLabel="Make Live">
+            <mat-select formControlName="makeLive">
+              <mat-option value="true">True</mat-option>
+              <mat-option value="false">False</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <h5 style="margin-top: 2em">Auto Renewal</h5>
+      <div class="row" formGroupName="autoRenewPeriod">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="full">
+            <input matInput [matDatepicker]="picker" placeholder="Starting Date" formControlName="start">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="full">
+            <input matInput [matDatepicker]="picker2" placeholder="Ending Date" formControlName="end">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <mat-checkbox color="primary" style="margin-left: 0.6em;" formControlName="autoRenew">Toggle autorenewal</mat-checkbox>
+      </div>
+    </div>
+
+
+    <mat-divider style="margin-top: 2em"></mat-divider>
+    <div formGroupName="preferences">
+      <h5 style="margin-top: 4em">Optional Information</h5>
+
+      <div class="row optional" formGroupName="annualSalary">
+
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Max Salary</mat-label>
+            <input name="title" matInput placeholder="eg 100000000" maxlength="100" formControlName="max">
+            <mat-error *ngIf="maxSalaryField.invalid && maxSalaryField.touched">{{maxSalaryError()}}</mat-error>
+
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Min Salary</mat-label>
+            <input name="title" matInput placeholder="eg 10000" maxlength="100" formControlName="min">
+            <mat-error *ngIf="minSalaryField.invalid && minSalaryField.touched">{{minSalaryError()}}</mat-error>
+
+          </mat-form-field>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="full" hintLabel="Project Type">
+            <mat-select formControlName="jobType">
+              <mat-option>None</mat-option>
+              <mat-option value="part time">Part Time</mat-option>
+              <mat-option value="full time">Full Time</mat-option>
+              <mat-option value="internship">Internship</mat-option>
+              <mat-option value="contract">Contract</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <h5 style="margin-top: 2em">Check whichever applicable</h5>
+      <div class="row">
+        <div class="col-sm-6">
+          <ul style="float:left; margin-left: -2.3em">
+            <li>
+              <mat-checkbox formControlName="autoMatch">Send auto-matched resume from database</mat-checkbox>
+            </li>
+            <li>
+              <mat-checkbox formControlName="screening">Use screening for this Project</mat-checkbox>
+            </li>
+            <li>
+              <mat-checkbox formControlName="companyName">Keep the company name confidential</mat-checkbox>
+            </li>
+
+          </ul>
+        </div>
+
+        <div class="col-sm-6">
+          <ul style="float:left; ">
+            <li>
+              <mat-checkbox formControlName="revealContact">Reveal contact details to Project applicants</mat-checkbox>
+            </li>
+            <li>
+              <mat-checkbox formControlName="womenOnGo">Showcase the Project to women on the go</mat-checkbox>
+            </li>
+            <li>
+              <mat-checkbox formControlName="applicationsInEmail">Don't send applications in email</mat-checkbox>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 3em; margin-bottom: 2em">
+      <div class="col-12 mx-auto" style="text-align: center">
+        <button mat-stroked-button color="accent" type="submit" >Submit Project</button>
+      </div>
+    </div>
+
+
+
+  </form>
+</div>
+<!-- <button mat-button (click)="changeTab()">Test</button> -->

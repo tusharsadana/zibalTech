@@ -1,0 +1,39 @@
+h6{
+    font-size: 15px
+}
+.col-8{
+    font-size: 15px
+}
+
+mat-card{
+    overflow-x: hidden;
+}
+
+.detailss{
+    border:1px solid  rgba(0, 0, 0, 0.2);
+    text-align: justify;
+    font-size: 13px;
+    font-weight: 300px;
+    padding: 0.9em;
+    margin-top: 1.5em
+}
+span{
+    display: block!important;
+}
+li{
+    list-style: none;
+    margin-top: 4px
+}
+mat-card-title{
+    text-align: center
+}
+mat-card{
+    max-height: 90vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.fab-button{
+    position: absolute;
+    z-index: 999;
+}

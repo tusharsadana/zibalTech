@@ -1,0 +1,15 @@
+<div class="container-fluid mt-4">
+  <mat-card class="mat-elevation-z1">
+    <mat-tab-group dynamicHeight animationDuration="500ms" (index)="selectTab($event)"  [selectedIndex]="selectTab">
+        <mat-tab label="Project List">
+            <ng-template matTabContent>
+              <app-dashboard-jobs-listing></app-dashboard-jobs-listing>
+            </ng-template>
+          </mat-tab>
+      <mat-tab label="Post Project" animationDuration="500ms">
+          <app-dashboard-jobs-posting></app-dashboard-jobs-posting>
+      </mat-tab>
+    
+    </mat-tab-group>
+  </mat-card>
+</div>

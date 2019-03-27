@@ -1,0 +1,32 @@
+
+<div class="container">
+  <img src="" width="170px">
+  <h4>Sign in</h4>
+  <form>
+      
+    <input name="email" placeholder="Email" type="email" [(ngModel)]="login.emailID" required>
+    <br>
+    <input name="password" type="password" placeholder="Password" [(ngModel)]="login.password" required>
+    <br>
+    <br>
+    <!-- <mat-form-field>
+      <mat-select placeholder="Login Option">
+        <mat-option value="option1">Admin</mat-option>
+        <mat-option value="option2" disabled>HR</mat-option>
+        <mat-option value="option3" disabled>Candidate</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+    <br>
+    <button mat-stroked-button color="primary" (click)="loginUser()" *ngIf="!fetching">Login</button>
+    <mat-progress-bar mode="query" *ngIf="fetching"></mat-progress-bar>
+    <div class="others">
+
+      <a routerLink="./register">Create account</a>
+      <div class="alert alert-danger" *ngIf="isError">
+        <strong class="mt-4">{{errorMessage}}</strong>
+
+      </div>
+    </div>
+    
+  </form>
+</div>

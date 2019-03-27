@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700');
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+html, body { height: 100%; overflow-x: hidden!important; }
+body { margin: 0;  font-family: 'Montserrat', sans-serif ; }
+a{text-decoration: none!important}
+button:focus { outline: none; }
+input:focus{outline: none}
